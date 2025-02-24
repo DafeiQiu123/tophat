@@ -6,11 +6,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
-# Top Hat credentials
+
 SCHOOL_NAME = "Brown University"
 SSO_Username = "yqiu35"
 SSO_Password = "Jimmy3939:"
-POLL_ANSWER = "A"  # Replace with the answer you want to submit (e.g., "A", "B", etc.)
+# execution_num = 2*60*60/15 
+execution_num = 10
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
@@ -21,11 +22,11 @@ try:
     print("opening tophat login page")
 
     # Enter Brown University
-    school_input = WebDriverWait(driver, 1).until(
+    school_input = WebDriverWait(driver, 2).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "input[placeholder='Search for your school']"))
     )
     school_input.send_keys(SCHOOL_NAME)
-    time.sleep(1)  
+    time.sleep(2)  
 
     school_input.send_keys(Keys.DOWN)  
     school_input.send_keys(Keys.RETURN)
@@ -54,7 +55,7 @@ try:
     print("Pass SSO.")
 
     # press trust the device
-    trust_button = WebDriverWait(driver, 10).until(
+    trust_button = WebDriverWait(driver, 15).until(
         EC.element_to_be_clickable((By.ID, "trust-browser-button"))
     )
     trust_button.click()
@@ -76,6 +77,16 @@ try:
     )
     print("Inside Course")
 
+    # click the classroom 
+    classroom_tab = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//a[@data-click-id='nav tab lecture']")))
+    classroom_tab.click()
+    print("Clicked 'Classroom' tab.")
+
+    # refresh until question comes up
+    send_count = 0
+    while (send_count < execution_num):
+        driver.refresh()
+        time.sleep(15)
 finally:
     # 关闭浏览器
     time.sleep(10)
