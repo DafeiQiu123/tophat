@@ -15,11 +15,11 @@ question_refresh_time = 20 # some time shorter than the question last
 execution_num = 2*60*60//question_refresh_time
 Brown_University_IP = "128.148.204.163"
 
-# chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument(f'--proxy-server={Brown_University_IP}')
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument(f'--proxy-server={Brown_University_IP}')
 service = Service(ChromeDriverManager().install())
-# driver = webdriver.Chrome(service=service, options = chrome_options)
-driver = webdriver.Chrome(service = service)
+driver = webdriver.Chrome(service=service, options = chrome_options)
+# driver = webdriver.Chrome(service = service)
 
 try:
     # Open Top Hat login page
