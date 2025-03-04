@@ -95,9 +95,10 @@ try:
         send_count += 1
         try:
             poll_button = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located(EC.element_to_be_clickable((By.XPATH, "//button[.//span[text()='A']]")))
-            ) 
+                EC.presence_of_element_located((By.XPATH, "//input[@type='radio' and contains(@value, 'A')]"))
+            )
             poll_button.click()
+            print("Answer selected")
             answer_button = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located(EC.element_to_be_clickable((By.XPATH, "//button[.//span[text()='Submit']]")))
             ) 
